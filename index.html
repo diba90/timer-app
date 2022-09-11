@@ -25,6 +25,7 @@
             display: flex;
             justify-content: center;
             font-weight: 700;
+            margin-bottom: 40px;
         }
 
         .warning {
@@ -33,11 +34,11 @@
         
         .btn {
             font-size: 13px;
-            background: #277BC0;
-            padding: 8px 30px;
-            border: solid 1px #277BC0;
+            background: #3D8361;
+            padding: 9px 29px;
+            border: solid 1px #3D8361;
             color: #ffffff;
-            border-radius: 5px;
+            border-radius: 4px;
             font-weight: 700;
         }
 
@@ -59,13 +60,13 @@
 <body>
     <h1>Javascript Timer Example</h1>
     <div id="timer" class="timer_demo">2 : 00</div>
-    <div id="message">Click <b>start</b> to start the timer</div><br><br>
     <div class="event-block">
         <button class="btn btn-1" onclick="start();" type="button">Start</button>
         <button class="btn btn-1" onclick="resume();" type="button">Resume</button>
         <button class="btn btn-1" onclick="stop();" type="button">Pause</button>
         <button class="btn btn-2" onclick="reset()" type="button">Reset</button>
     </div>
+    <div id="message">Click <b>start</b> to start the timer</div><br><br>
 
     <script>
      
@@ -78,10 +79,12 @@
             localStorage.setItem('min', 1);
             localStorage.setItem('sec', 59);
 
-            timer = setInterval(mytimer, 1000);
+            clearInterval(timer);
 
             minute = localStorage.getItem('min');
             second = localStorage.getItem('sec');
+
+            timer = setInterval(mytimer, 1000);
 
             document.getElementById('message').innerHTML = "";
 
@@ -119,7 +122,12 @@
 
             clearInterval(timer);
 
+            minute = 1;
+            second = 59;
+
             document.getElementById("timer").innerHTML = "2 : 00";
+
+            document.getElementById("timer").classList.remove('warning');
 
         }
 
@@ -132,18 +140,28 @@
             
             clearInterval(timer);
 
-            document.getElementById("timer").innerHTML = minute + " : " + second;
+            if(minute === 1 && second === 59) {
+                document.getElementById("timer").innerHTML = "2 : 00";
+            } else if(minute === null && second === null) {
+                document.getElementById("timer").innerHTML = "2 : 00";
+            } else {
+                document.getElementById("timer").innerHTML = minute + " : " + second;
+            }
 
         }
 
         function resume() {
 
             document.getElementById('message').innerHTML = "";
+            clearInterval(timer);
 
-            timer = setInterval(mytimer, 1000);
-
-            minute = localStorage.getItem('min');
-            second = localStorage.getItem('sec');
+            if(minute === null && second === null) {
+                minute = 1;
+                second = 59;
+                timer = setInterval(mytimer, 1000);
+            } else {
+                timer = setInterval(mytimer, 1000);
+            }
 
         }
 
