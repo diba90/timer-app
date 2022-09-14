@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <head>
+
     <title>Javascript Timer</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,16 +56,17 @@
         }
 
     </style>
+    
 </head>
-
 <body>
+
     <h1>Javascript Timer Example</h1>
     <div id="timer" class="timer_demo">2 : 00</div>
     <div class="event-block">
-        <button class="btn btn-1" onclick="start();" type="button">Start</button>
-        <button class="btn btn-1" onclick="resume();" type="button">Resume</button>
-        <button class="btn btn-1" onclick="stop();" type="button">Pause</button>
-        <button class="btn btn-2" onclick="reset()" type="button">Reset</button>
+        <button class="btn btn-1" onclick="startTimer();" type="button">Start</button>
+        <button class="btn btn-1" onclick="resumeTimer();" type="button">Resume</button>
+        <button class="btn btn-1" onclick="stopTimer();" type="button">Pause</button>
+        <button class="btn" onclick="resetTimer()" type="button">Reset</button>
     </div>
     <div id="message">Click <b>start</b> to start the timer</div><br><br>
 
@@ -74,15 +76,15 @@
         var minute = null;
         var second = null;
 
-        function start() {
+        function startTimer() {
 
-            localStorage.setItem('min', 1);
-            localStorage.setItem('sec', 59);
+            localStorage.setItem('minute', 1);
+            localStorage.setItem('second', 59);
 
             clearInterval(timer);
 
-            minute = localStorage.getItem('min');
-            second = localStorage.getItem('sec');
+            minute = localStorage.getItem('minute');
+            second = localStorage.getItem('second');
 
             timer = setInterval(mytimer, 1000);
 
@@ -95,7 +97,8 @@
             document.getElementById("timer").innerHTML = minute + " : " + second;
             second = second - 1;
             
-            if (minute == 0 && second === 10) {
+            if (minute === 0 && second === 14) {
+                    // This section shows red color when timer reaches 15 second
                     document.getElementById("message").innerHTML = "Hurry, Your exam will finsh soon";
                     document.getElementById("timer").classList.add('warning');
             } else if(second === 0) {
@@ -104,21 +107,21 @@
                 if(minute === -1 && second === 59) {
                     localStorage.clear();
                     clearInterval(timer);
+                    // After completion of 2 minutes this message will show
                     document.getElementById("message").innerHTML = "Your exam is completed successfully";
                     document.getElementById("timer").classList.remove('warning');
                     document.getElementById("timer").innerHTML = "2 : 00";
                 }
             } 
-            
       
         }
 
-        function reset() {
+        function resetTimer() {
 
             document.getElementById('message').innerHTML = "";
 
-            localStorage.setItem('min', 1);
-            localStorage.setItem('sec', 59);
+            localStorage.setItem('minute', 1);
+            localStorage.setItem('second', 59);
 
             clearInterval(timer);
 
@@ -131,12 +134,12 @@
 
         }
 
-        function stop() {
+        function stopTimer() {
 
             document.getElementById('message').innerHTML = "";
 
-            localStorage.setItem('min', minute);
-            localStorage.setItem('sec', second);
+            localStorage.setItem('minute', minute);
+            localStorage.setItem('second', second);
             
             clearInterval(timer);
 
@@ -150,7 +153,7 @@
 
         }
 
-        function resume() {
+        function resumeTimer() {
 
             document.getElementById('message').innerHTML = "";
             clearInterval(timer);
@@ -165,8 +168,6 @@
 
         }
 
-      
-    
     </script>
 </body>
 </html>
